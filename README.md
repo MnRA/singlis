@@ -21,3 +21,5 @@ Enter how long you'd like the stream to take.
 * Withdraw from the stream [(here)](https://docs.sablier.finance/streams#withdraw-from-stream)
 
 * Modify the duration of the stream by a few seconds instead of the amount sent if it's in a reasonable deviation from the intended time (maybe 2%?)
+
+* use the non-deprecated function to enable metamask (which would also allow me to make a callback that changes the state of the connectivity bar) [(here)](https://docs.metamask.io/guide/rpc-api.html#permissions)
