@@ -9,3 +9,7 @@
 (re-frame/reg-sub
  ::status
  #(:status %))
+
+(re-frame/reg-sub
+ ::balance
+ #(:balance %))

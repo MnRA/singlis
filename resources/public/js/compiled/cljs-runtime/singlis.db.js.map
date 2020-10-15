@@ -1,1 +1,1 @@
-{"version":3,"sources":["singlis/db.cljs"],"mappings":";AAEA,AAAA,AAAKA","names":["singlis.db/default-db"],"sourcesContent":["(ns singlis.db)\n\n(def default-db\n  {})\n"]}
+{"version":3,"sources":["singlis/db.cljs"],"mappings":";AAEA,AAAA,AAAA,AAAA,AAAKA","names":["singlis.db/default-db"],"sourcesContent":["(ns singlis.db)\n\n(def default-db\n  {:check-balance true})\n"]}

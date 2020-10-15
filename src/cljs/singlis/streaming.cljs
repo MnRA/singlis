@@ -6,6 +6,12 @@
 (def sablier-address "0xc04Ad234E01327b24a831e3718DBFcbE245904CC")
 (def testnetDAI-address "0xc3dbf84Abb494ce5199D5d4D815b10EC29529ff8")
 
+(defn current-address []
+  (.-selectedAddress js/window.ethereum))
+
+(defn format-units [number]
+  (.formatUnits js/ethers.utils number))
+
 (defn metamask-installed? []
   (.hasOwnProperty js/window "ethereum"))
 
@@ -27,7 +33,17 @@
   (js/ethers.Contract. sablier-address sablierABI signer))
 
 (defn token [signer]
-   (js/ethers.Contract. testnetDAI-address ierc20ABI signer ))
+  (js/ethers.Contract. testnetDAI-address ierc20ABI signer ))
+
+(defn check-balance []
+  (if (metamask-connected?)
+    (-> (signer)
+        (token)
+        (.balanceOf (current-address))
+        (.then format-units)
+        (.then #(re-frame/dispatch [:update-balance %])))
+    ))
+
 
 (defn approve-token [^js/e token deposit]
   (-> (.approve token sablier-address deposit)
@@ -55,4 +71,5 @@
                  (+ now duration delay)
                  recipient deposit))
         (.then #(re-frame/dispatch [:update-status :finished]))
+        (.then #(re-frame/dispatch [:check-balance]))
         (.catch #(re-frame/dispatch [:update-status :failed])))))

@@ -6,6 +6,11 @@
    ))
 
 (re-frame/reg-fx
+ :check-balance
+ (fn [_]
+   (streaming/check-balance)))
+
+(re-frame/reg-fx
  :enable-metamask
  (fn [_]
    (streaming/enable-metamask)))
@@ -14,6 +19,16 @@
  :create-stream
  (fn [stream-values]
    (streaming/process-form stream-values)))
+
+(re-frame/reg-event-db
+ :update-balance
+ (fn [db [_ value]]
+   (assoc db :balance value)))
+
+(re-frame/reg-event-fx
+ :check-balance
+ (fn [_ _]
+   {:check-balance true}))
 
 (re-frame/reg-event-fx
  :enable-metamask
@@ -36,7 +51,7 @@
  (fn [db [_ status]]
    (assoc db :status status)))
 
-(re-frame/reg-event-db
+(re-frame/reg-event-fx
  ::initialize-db
  (fn [_ _]
    db/default-db))

@@ -16,6 +16,10 @@
      {:on-click #(re-frame.core/dispatch [:enable-metamask])}
      "MetaMask Disconnected, click to connect"]))
 
+(defn account-balance []
+  (let [balance @(re-frame/subscribe [::subs/balance])]
+    [:h3 (str "Current Balance: " balance " testnetDAI")]))
+
 (defn update-form [k event]
   (re-frame/dispatch [:stream-values k (-> event .-target .-value)]))
 
@@ -29,6 +33,7 @@
         status @(re-frame/subscribe [::subs/status])]
     [:div
      [:h1 "Welcome to Singlis"]
+     (account-balance)
      [:h3 "Recipient"]
      (form-input "text" :recipient stream-values)
      [:h3 "Quantity"]
